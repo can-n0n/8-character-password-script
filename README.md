@@ -1,5 +1,3 @@
-**Repository Name: SecurePassGen**
-
 **Description:**
 
 SecurePassGen is a PowerShell script designed for generating secure passwords tailored for pentesting purposes. In the realm of cybersecurity, robust password generation is crucial for maintaining the integrity and confidentiality of sensitive data. This script provides a simple yet effective solution by crafting passwords that combine the strength of dictionary words, letters, and symbols.
