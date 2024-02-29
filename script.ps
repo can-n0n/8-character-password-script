@@ -1,0 +1,41 @@
+# Function to generate a random dictionary word
+function Generate-DictionaryWord {
+    $words = Get-Content "C:\Users\Public\5letterwords.txt" # Path to the dictionary file
+    $word = ($words | Get-Random).ToLower()
+    $word = $word.Substring(0,1).ToUpper() + $word.Substring(1) # Capitalize the first letter
+    return $word
+}
+
+# Function to generate a password
+function Generate-Password {
+    $dictionary_word = Generate-DictionaryWord
+    $numbers = -join (0..9 | Get-Random -Count 2)
+
+    $password = $dictionary_word + $numbers
+    return $password
+}
+
+# Function to generate a list of passwords
+function Generate-PasswordList {
+    param (
+        [int]$num_passwords
+    )
+    $passwords = @()
+    $symbol = Get-Random -Count 1 -InputObject '!@#$%^&*()_+-=[]{}|;:,.<>?'
+    for ($i = 0; $i -lt $num_passwords; $i++) {
+        $password = Generate-Password
+        $password += $symbol  # Append the random symbol to the password
+        $passwords += $password
+    }
+    return $passwords
+}
+
+# Main script
+$num_passwords = Read-Host "Enter the number of passwords to generate"
+$symbol = Get-Random -InputObject '!@#$%^&*()_+-=[]{}|;:,.<>?'
+$password_list = Generate-PasswordList -num_passwords $num_passwords
+
+for ($i = 0; $i -lt $password_list.Length; $i++) {
+    $password_list[$i] = $password_list[$i] -replace ".$", $symbol
+    Write-Output "Password $($i+1): $($password_list[$i])"
+}
